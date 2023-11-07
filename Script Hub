@@ -1,0 +1,106 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Window = OrionLib:MakeWindow({Name = "Alfi's Hub | LimeOyster HUB", HidePremium = false, SaveConfig = true, ConfigFolder = "Alfi's Hub",IntroEnabled = true, IntroText = "Alfi's Hub"})
+
+local Info = Window:MakeTab({
+	Name = "Info & Welcome",
+	PremiumOnly = false
+})
+
+local Tools = Window:MakeTab({
+	Name = "Tools",
+	PremiumOnly = false
+})
+
+local Script = Window:MakeTab({
+	Name = "Script",
+	PremiumOnly = false
+})
+
+local Settings = Window:MakeTab({
+	Name = "Settings",
+	PremiumOnly = false
+})
+
+local Section1 = Script:AddSection({
+	Name = "Blox Fruit"
+})
+
+local Section2 = Script:AddSection({
+	Name = "King Legacy"
+})
+
+local Section3 = Script:AddSection({
+	Name = "Rainbow Friends"
+})
+
+local Section4 = Script:AddSection({
+	Name = "Break in Story"
+})
+
+local Section5 = Script:AddSection({
+	Name = "CDID"
+})
+
+Info:AddParagraph("Welcome","Its a collective tools and script I made for my personal use                       Made by lime / limeoyster")
+
+Tools:AddButton({
+    Name = "Infinite Yield FE Admin",
+    Callback = function()
+        loadstring(game:HttpGetAsync('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+    end
+})
+
+Tools:AddButton({
+    Name = "Dark Dex V4",
+    Callback = function()
+        loadstring(game:HttpGetAsync(("https://gist.githubusercontent.com/DinosaurXxX/b757fe011e7e600c0873f967fe427dc2/raw/ee5324771f017073fc30e640323ac2a9b3bfc550/dark%2520dex%2520v4")))()
+    end
+})
+
+Tools:AddButton({
+    Name = "Turtle Spy",
+    Callback = function()
+        Loadstring(game:HttpGetAsync(("https://github.com/MirayXS/scripts-4/blob/main/TurtleSpy.lua")))()
+        end
+})
+
+Section1:AddButton({
+    Name = "HoHo HUB",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI"))()
+    end
+})
+
+Section1:AddButton({
+    Name = "Ganteng Hub (No Key)",
+    Callback = function()
+        loadstring(game:HttpGet("https://isnahamzahpastebin.tech/v1/gantenghubv1_003"))()
+    end
+})
+
+Section1:AddButton({
+    Name = "MasterHub",
+    Callback = function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/onepicesenpai/onepicesenpai/main/onichanokaka'))()
+    end
+})
+
+Section1:AddButton({
+    Name = "Black Trap",
+    Callback = function()
+        loadstring(game:HttpGetAsync("https://blacktrap.org/checkpoint/Auth.txt"))()
+    end
+})
+
+Section5:AddButton({
+    Name = "Atomic",
+    Callback = function()
+        script_key="YbaBrsUaxOxauMMEHWpqGzsLsEnrKwpT"
+        loadstring(game:HttpGet("https://diamonds.atomic48.xyz/Diamonds.lua"))()
+    end
+})
+
+
+
+
+OrionLib:Init()
