@@ -60,8 +60,8 @@ Tools:AddButton({
 Tools:AddButton({
     Name = "Turtle Spy",
     Callback = function()
-        loadstring(game:HttpGetAsync(("https://raw.githubusercontent.com/limeoyster/Roblox-Script/main/TurtleSpy?token=GHSAT0AAAAAACJ6VWBD7KPWQBY3SR7IVP6CZKJSTNQ")))()
-        end
+        Loadstring(game:HttpGetAsync(("https://raw.githubusercontent.com/limeoyster/Roblox-Script/main/TurtleSpy?token=GHSAT0AAAAAACJ6VWBD7KPWQBY3SR7IVP6CZKJSTNQ")))()
+     end
 })
 
 Section1:AddButton({
@@ -104,3 +104,4 @@ Section5:AddButton({
 
 
 OrionLib:Init()
+
