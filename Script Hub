@@ -1764,7 +1764,15 @@ function OrionLib:Destroy()
 end
 
 
-local Window = OrionLib:MakeWindow({Name = "Alfi's Hub | LimeOyster HUB", HidePremium = false, SaveConfig = true, ConfigFolder = "Alfi's Hub",IntroEnabled = true, IntroText = "Alfi's Hub"})
+local Window = OrionLib:MakeWindow({Name = "Alfi's Hub | LimeOyster HUB", HidePremium = false, SaveConfig = false, ConfigFolder = "Alfi's Hub",IntroEnabled = true, IntroText = "Alfi's Hub"})
+
+
+OrionLib:MakeNotification({
+	Name = "Your in!",
+	Content = "Welcome to Alfi's HUB!",
+	Image = "rbxassetid://4483345998",
+	Time = 5
+})
 
 local Info = Window:MakeTab({
 	Name = "Info & Welcome",
