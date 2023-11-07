@@ -60,7 +60,7 @@ Tools:AddButton({
 Tools:AddButton({
     Name = "Turtle Spy",
     Callback = function()
-        Loadstring(game:HttpGetAsync(("https://github.com/MirayXS/scripts-4/blob/main/TurtleSpy.lua")))()
+        loadstring(game:HttpGetAsync(("https://raw.githubusercontent.com/limeoyster/Roblox-Script/main/TurtleSpy?token=GHSAT0AAAAAACJ6VWBD7KPWQBY3SR7IVP6CZKJSTNQ")))()
         end
 })
 
