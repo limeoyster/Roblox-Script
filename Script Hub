@@ -1814,6 +1814,10 @@ local Section5 = Script:AddSection({
 	Name = "CDID"
 })
 
+local Section6 = Script:AddSection({
+	Name = "Fishing Simulator"
+})
+
 Info:AddParagraph("Welcome","Its a collective tools and script I made for my personal use                       Made by lime / limeoyster")
 
 Tools:AddButton({
@@ -1870,6 +1874,20 @@ Section5:AddButton({
     Callback = function()
         script_key="YbaBrsUaxOxauMMEHWpqGzsLsEnrKwpT"
         loadstring(game:HttpGet("https://diamonds.atomic48.xyz/Diamonds.lua"))()
+    end
+})
+
+Section4:AddButton({
+    Name = "Break in Chapter 2",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/memejames/Hide/main/Break%20in%202"))()
+    end
+})
+
+Section6:AddButton({
+    Name = "HaxHell (require key)",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/haxhell/roblox-scripts/main/fishing-simulator.lua", true))()
     end
 })
 
