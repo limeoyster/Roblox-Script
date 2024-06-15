@@ -72,10 +72,9 @@ local Button = Tab:CreateButton({
    Name = "Quasar",
    Callback = function()
 local args = {
-    [1] = "Qsr"
-}
-
-game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("ExchangeMoney"):FireServer(unpack(args))
+            [1] = "Qsr"
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("ExchangeMoney"):FireServer(unpack(args))
    end,
 })
 
