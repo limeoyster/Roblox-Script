@@ -126,7 +126,7 @@ local Section = Tab:CreateSection("Automation")
 local function SendScriptContinuously1()
     while ToggleOn do
         game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("ActivateOverclock"):FireServer()
-        wait(300)  -- Adjust the delay between each script execution as needed
+        wait(15)  -- Adjust the delay between each script execution as needed
     end
 end
 
@@ -147,7 +147,7 @@ Toggle = Tab:CreateToggle({
 local function SendScriptContinuously2()
     while ToggleOn do
         game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("ClaimFreeBoostStar"):FireServer()
-        wait(420)  -- Adjust the delay between each script execution as needed
+        wait(10)  -- Adjust the delay between each script execution as needed
     end
 end
 
