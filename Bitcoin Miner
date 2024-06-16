@@ -26,8 +26,8 @@ local Window = Rayfield:CreateWindow({
 })
 
 -- Create tabs and UI elements
-local Tab = Window:CreateTab("Player", 4483362458)
-local Toggle = Tab:CreateToggle({
+local TabPlayer = Window:CreateTab("Player", 4483362458)
+local Toggle = TabPlayer:CreateToggle({
    Name = "Anti AFK",
    CurrentValue = false,
    Flag = "Toggle1",
@@ -41,7 +41,7 @@ local Toggle = Tab:CreateToggle({
    end,
 })
 
-local Slider = Tab:CreateSlider({
+local Slider = TabPlayer:CreateSlider({
    Name = "Walk Speed",
    Range = {0, 200},
    Increment = 1,
@@ -53,23 +53,23 @@ local Slider = Tab:CreateSlider({
    end,
 })
 
-local Tab = Window:CreateTab("Game", 4483362458)
-local Section = Tab:CreateSection("Exchange")
-local ButtonBitcoin = Tab:CreateButton({
+local TabGame = Window:CreateTab("Game", 4483362458)
+local Section = TabGame:CreateSection("Exchange")
+local ButtonBitcoin = TabGame:CreateButton({
    Name = "Bitcoins",
    Callback = function()
        -- The function that takes place when the button is pressed
    end,
 })
 
-local ButtonSolaris = Tab:CreateButton({
+local ButtonSolaris = TabGame:CreateButton({
    Name = "Solaris",
    Callback = function()
        -- The function that takes place when the button is pressed
    end,
 })
 
-local ButtonQuasar = Tab:CreateButton({
+local ButtonQuasar = TabGame:CreateButton({
    Name = "Quasar",
    Callback = function()
        local args = {
@@ -79,8 +79,8 @@ local ButtonQuasar = Tab:CreateButton({
    end,
 })
 
-local SectionAutoExchange = Tab:CreateSection("Auto Exchange")
-local ToggleBinanceAuto = Tab:CreateToggle({
+local SectionAutoExchange = TabGame:CreateSection("Auto Exchange")
+local ToggleBinanceAuto = TabGame:CreateToggle({
    Name = "Binance Auto",
    CurrentValue = false,
    Flag = "Binance1",
@@ -89,7 +89,7 @@ local ToggleBinanceAuto = Tab:CreateToggle({
    end,
 })
 
-local ToggleSolarisAuto = Tab:CreateToggle({
+local ToggleSolarisAuto = TabGame:CreateToggle({
    Name = "Solaris Auto",
    CurrentValue = false,
    Flag = "Solaris1",
@@ -98,7 +98,7 @@ local ToggleSolarisAuto = Tab:CreateToggle({
    end,
 })
 
-local ToggleQuasarAuto = Tab:CreateToggle({
+local ToggleQuasarAuto = TabGame:CreateToggle({
    Name = "Quasar Auto",
    CurrentValue = false,
    Flag = "Quasar1",
@@ -118,8 +118,8 @@ local ToggleQuasarAuto = Tab:CreateToggle({
    end,
 })
 
-local SectionAutomation = Tab:CreateSection("Automation")
-local ToggleAutoOverclock = Tab:CreateToggle({
+local SectionAutomation = TabGame:CreateSection("Automation")
+local ToggleAutoOverclock = TabGame:CreateToggle({
    Name = "Auto OverClock",
    CurrentValue = false,
    Flag = "Clock1",
@@ -136,7 +136,7 @@ local ToggleAutoOverclock = Tab:CreateToggle({
    end,
 })
 
-local ToggleAutoClaimBoostStar = Tab:CreateToggle({
+local ToggleAutoClaimBoostStar = TabGame:CreateToggle({
    Name = "Auto Claim Boost Star",
    CurrentValue = false,
    Flag = "Star1",
@@ -153,7 +153,7 @@ local ToggleAutoClaimBoostStar = Tab:CreateToggle({
    end,
 })
 
-local ToggleAutoAlgorithms = Tab:CreateToggle({
+local ToggleAutoAlgorithms = TabGame:CreateToggle({
    Name = "Auto algorithms (test)",
    CurrentValue = false,
    Flag = "algo1",
@@ -174,8 +174,8 @@ local ToggleAutoAlgorithms = Tab:CreateToggle({
 })
 
 local TabBuild = Window:CreateTab("Build", 4483362458)
-local ButtonPlaceShelves = TabBuild:CreateButton({
-   Name = "FUll Plot Shelves Plot 1 ",
+local ButtonPlaceShelves1 = TabBuild:CreateButton({
+   Name = "FUll Plot Shelves Plot 1",
    Callback = function()
        -- Define the base arguments for placing the "Server Shelf"
        local baseArgs = {
@@ -210,9 +210,11 @@ local ButtonPlaceShelves = TabBuild:CreateButton({
                wait(0.3)  -- Adjust delay between each placement as needed
            end
        end
+   end
+})
 
-local ButtonPlaceShelves = TabBuild:CreateButton({
-   Name = "FUll Plot Shelves Plot 2 ",
+local ButtonPlaceShelves2 = TabBuild:CreateButton({
+   Name = "FUll Plot Shelves Plot 2",
    Callback = function()
        -- Define the base arguments for placing the "Server Shelf"
        local baseArgs = {
@@ -247,6 +249,5 @@ local ButtonPlaceShelves = TabBuild:CreateButton({
                wait(0.3)  -- Adjust delay between each placement as needed
            end
        end
-
-   end,
+   end
 })
