@@ -1,4 +1,4 @@
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local Window = Rayfield:CreateWindow({
    Name = "expedition antarctica",
    LoadingTitle = "expedition antarctica",
@@ -53,7 +53,7 @@ local Slider = TabPlayer:CreateSlider({
    end,
 })
 
-local Teleport = Window:CreateTab("Player", 4483362458)
+local Teleport = Window:CreateTab("Teleport", 4483362458)
 local Button = Tab:CreateButton({
    Name = "Checkpoint 1",
    Callback = function()
