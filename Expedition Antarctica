@@ -105,6 +105,8 @@ local Button = Tab:CreateButton({
    end,
 })
 local Tab = Window:CreateTab("Etc", 4483362458) -- Title, Image
+-- Assuming Tab:CreateButton returns the button object which can be used later if needed
+
 local Button = Tab:CreateButton({
     Name = "godButton",
     Callback = function()
@@ -135,8 +137,8 @@ local Button = Tab:CreateButton({
             nHuman.Parent = Char
             player.Character = nil
 
+            -- Set state enabled for specific states
             nHuman:SetStateEnabled(Enum.HumanoidStateType.Seated, false)
-            nHuman:SetStateEnabled(Enum.HumanoidStateType.Jumping, false)
             nHuman:SetStateEnabled(Enum.HumanoidStateType.Dead, false)
             nHuman.BreakJointsOnDeath = true
             Human:Destroy()
@@ -159,15 +161,9 @@ local Button = Tab:CreateButton({
             nHuman.Health = nHuman.MaxHealth
         end
 
-        -- Assuming you have a button in your Rayfield GUI named "godButton"
-        local godButton = script.Parent  -- This assumes the button is directly under the Tab element
-
         -- Connect button click event to enableGodMode function
-        godButton.MouseButton1Click:Connect(function()
-            enableGodMode()
-        end)
+        enableGodMode()
     end,
 })
 
 -- Assuming Tab:CreateButton returns the button object which can be used later if needed
-
