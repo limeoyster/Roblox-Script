@@ -107,7 +107,7 @@ local Button = Tab:CreateButton({
 local Tab = Window:CreateTab("Etc", 4483362458) -- Title, Image
 -- Assuming Tab:CreateButton returns the button object which can be used later if needed
 
-local Button = Tab:CreateButton({
+local Button = TabPlayer:CreateButton({
     Name = "godButton",
     Callback = function()
         -- Function to enable god mode
@@ -167,7 +167,7 @@ local Button = Tab:CreateButton({
 })
 
 local Toggle = TabPlayer:CreateToggle({
-   Name = "Anti AFK",
+   Name = "INFINITE JUMP",
    CurrentValue = false,
    Flag = "Toggleinfinitejump",
    Callback = function(Value)
