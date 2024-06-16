@@ -1,0 +1,18 @@
+local placeID = game.PlaceId
+
+-- Function to load or require different scripts based on placeID
+local function loadGameScript()
+    if placeID == 2693023319 then
+        -- Load Script for Game 1
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/limeoyster/Roblox-Script/main/Expedition%20Antarctica"))()
+    elseif placeID == 2629642516 then
+        -- Load Script for Game 2
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/limeoyster/Roblox-Script/main/Bitcoin%20Miner"))()
+    else
+        -- Default behavior if Place ID doesn't match any expected games
+        print("No specific script found for this game.")
+    end
+end
+
+-- Call the function to load the appropriate script
+loadGameScript()
