@@ -166,4 +166,30 @@ local Button = Tab:CreateButton({
     end,
 })
 
+local Toggle = TabPlayer:CreateToggle({
+   Name = "Anti AFK",
+   CurrentValue = false,
+   Flag = "Toggleinfinitejump",
+   Callback = function(Value)
+   local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+-- Function to handle jumping
+local function infiniteJump()
+    -- Listen for input
+    game:GetService("UserInputService").InputBegan:Connect(function(input)
+        -- Check if the input is a jump command and the humanoid is on the ground
+        if input.KeyCode == Enum.KeyCode.Space and humanoid.FloorMaterial ~= Enum.Material.Air then
+            -- Perform the jump
+            humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+        end
+    end)
+end
+
+-- Call the function to start listening for jumps
+infiniteJump()
+       
+   end,
+})
 -- Assuming Tab:CreateButton returns the button object which can be used later if needed
