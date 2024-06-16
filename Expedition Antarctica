@@ -1,4 +1,4 @@
-loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local Window = Rayfield:CreateWindow({
    Name = "expedition antarctica",
    LoadingTitle = "expedition antarctica",
@@ -53,36 +53,52 @@ local Slider = TabPlayer:CreateSlider({
    end,
 })
 
-local Teleport = Window:CreateTab("Teleport", 4483362458)
+local Slider = TabPlayer:CreateSlider({
+   Name = "Jump Power",
+   Range = {0, 200},
+   Increment = 1,
+   Suffix = "Speed",
+   CurrentValue = 16,
+   Flag = "Slider1",
+   Callback = function(jp)
+       game.Players.LocalPlayer.Character.Humanoid.JumpPower = jp
+   end,
+})
+
+local Tab = Window:CreateTab("teleport", 4483362458) -- Title, Image
+local Section = Tab:CreateSection("Teleport")
+
 local Button = Tab:CreateButton({
    Name = "Checkpoint 1",
    Callback = function()
        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-3722.03247, 225.039185, 235.443604, 0.482519239, -4.28959765e-08, -0.875885367, 1.0069067e-07, 1, 6.49537935e-09, 0.875885367, -9.13276281e-08, 0.482519239)
    end,
 })
+
 local Button = Tab:CreateButton({
    Name = "Checkpoint 2",
    Callback = function()
        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1790.02747, 105.442886, -137.760788, 0.998386443, 4.12721377e-08, -0.0567852072, -3.74067213e-08, 1, 6.91337689e-08, 0.0567852072, -6.68980675e-08, 0.998386443)
    end,
 })
+
 local Button = Tab:CreateButton({
    Name = "Checkpoint 3",
    Callback = function()
        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(5892.86133, 320.997925, -20.3485336, -0.999391317, 1.51905279e-08, -0.0348848924, 1.51242201e-08, 1, 2.16465845e-09, 0.0348848924, 1.63573399e-09, -0.999391317)
    end,
 })
+
 local Button = Tab:CreateButton({
    Name = "Checkpoint 4",
    Callback = function()
        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(8992.36914, 595.610901, 102.547264, -0.345662802, -2.30804282e-08, -0.938358784, -1.09596439e-08, 1, -2.05593924e-08, 0.938358784, 3.17746141e-09, -0.345662802)
    end,
 })
+
 local Button = Tab:CreateButton({
    Name = "Finish Line",
    Callback = function()
        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(10991.7129, 553.79657, 105.695847, -0.266106248, -2.31199273e-08, -0.96394372, -5.06013187e-09, 1, -2.25878285e-08, 0.96394372, -1.13307963e-09, -0.266106248)
    end,
-   
-   
 })
