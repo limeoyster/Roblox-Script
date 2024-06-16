@@ -167,29 +167,50 @@ local Button = TabPlayer:CreateButton({
 })
 
 local Toggle = TabPlayer:CreateToggle({
-   Name = "INFINITE JUMP",
-   CurrentValue = false,
-   Flag = "Toggleinfinitejump",
-   Callback = function(Value)
-   local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoid = character:WaitForChild("Humanoid")
+    Name = "INFINITE JUMP",
+    CurrentValue = false,
+    Flag = "ToggleInfiniteJump",
+    Callback = function(Value)
+        if Value then
+            -- Enable infinite jump
+            local player = game.Players.LocalPlayer
+            local character = player.Character or player.CharacterAdded:Wait()
+            local humanoid = character:WaitForChild("Humanoid")
 
--- Function to handle jumping
-local function infiniteJump()
-    -- Listen for input
-    game:GetService("UserInputService").InputBegan:Connect(function(input)
-        -- Check if the input is a jump command and the humanoid is on the ground
-        if input.KeyCode == Enum.KeyCode.Space and humanoid.FloorMaterial ~= Enum.Material.Air then
-            -- Perform the jump
-            humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+            -- Variable to track whether the player is currently jumping
+            local isJumping = false
+
+            -- Function to handle jumping
+            local function handleJump()
+                if not isJumping then
+                    isJumping = true
+                    humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+                    wait(0.1)  -- Adjust this delay as needed to prevent rapid jumping
+                    isJumping = false
+                end
+            end
+
+            -- Listen for input
+            local userInputService = game:GetService("UserInputService")
+            local connection
+            connection = userInputService.InputBegan:Connect(function(input)
+                if input.KeyCode == Enum.KeyCode.Space then
+                    handleJump()
+                end
+            end)
+
+            -- Store the connection in a table to disconnect later if needed
+            Toggle.Connection = connection
+
+        else
+            -- Disable infinite jump
+            if Toggle.Connection then
+                Toggle.Connection:Disconnect()
+                Toggle.Connection = nil
+            end
         end
-    end)
-end
-
--- Call the function to start listening for jumps
-infiniteJump()
-       
-   end,
+    end,
 })
--- Assuming Tab:CreateButton returns the button object which can be used later if needed
+
+-- Assuming TabPlayer:CreateToggle returns the toggle object which can be used later if needed
+
