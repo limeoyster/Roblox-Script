@@ -59,7 +59,7 @@ local Slider = TabPlayer:CreateSlider({
    Range = {0, 200},
    Increment = 1,
    Suffix = "Speed",
-   CurrentValue = 16,
+   CurrentValue = 50,
    Flag = "Slider1",
    Callback = function(jp)
        game.Players.LocalPlayer.Character.Humanoid.JumpPower = jp
@@ -165,52 +165,65 @@ local Button = TabPlayer:CreateButton({
         enableGodMode()
     end,
 })
-
+-- Assuming TabPlayer is a function that creates UI elements and returns the toggle object
+-- Assuming TabPlayer is a function that creates UI elements and returns the toggle object
 local Toggle = TabPlayer:CreateToggle({
     Name = "INFINITE JUMP",
     CurrentValue = false,
     Flag = "ToggleInfiniteJump",
     Callback = function(Value)
-        if Value then
-            -- Enable infinite jump
-            local player = game.Players.LocalPlayer
-            local character = player.Character or player.CharacterAdded:Wait()
-            local humanoid = character:WaitForChild("Humanoid")
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoid = character:WaitForChild("Humanoid")
 
-            -- Variable to track whether the player is currently jumping
-            local isJumping = false
-
-            -- Function to handle jumping
-            local function handleJump()
-                if not isJumping then
-                    isJumping = true
-                    humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-                    wait(0.1)  -- Adjust this delay as needed to prevent rapid jumping
-                    isJumping = false
-                end
+        -- Function to handle normal jump
+        local function handleJump()
+            if humanoid:GetState() == Enum.HumanoidStateType.Jumping or humanoid:GetState() == Enum.HumanoidStateType.Freefall then
+                humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
             end
+        end
 
-            -- Listen for input
-            local userInputService = game:GetService("UserInputService")
-            local connection
-            connection = userInputService.InputBegan:Connect(function(input)
-                if input.KeyCode == Enum.KeyCode.Space then
+        -- Listen for the jump input
+        local function onInputBegan(input)
+            if input.KeyCode == Enum.KeyCode.Space then
+                if not Toggle.CurrentValue then
                     handleJump()
                 end
-            end)
-
-            -- Store the connection in a table to disconnect later if needed
-            Toggle.Connection = connection
-
-        else
-            -- Disable infinite jump
-            if Toggle.Connection then
-                Toggle.Connection:Disconnect()
-                Toggle.Connection = nil
             end
+        end
+
+        -- Connect input listener
+        game:GetService("UserInputService").InputBegan:Connect(onInputBegan)
+
+        -- Function to monitor character state
+        local function monitorCharacter()
+            while humanoid.Parent do
+                if Toggle.CurrentValue and (humanoid:GetState() == Enum.HumanoidStateType.Jumping or humanoid:GetState() == Enum.HumanoidStateType.Freefall) then
+                    humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+                end
+                wait()
+            end
+        end
+
+        -- Start monitoring character state when toggle is enabled
+        if Toggle.CurrentValue then
+            coroutine.wrap(monitorCharacter)()
         end
     end,
 })
 
--- Assuming TabPlayer:CreateToggle returns the toggle object which can be used later if needed
+-- Function to handle player's character added event
+local function onCharacterAdded(character)
+    local humanoid = character:WaitForChild("Humanoid")
+
+    -- Reset isJumping when the character lands
+    humanoid.StateChanged:Connect(function(_, newState)
+        if newState == Enum.HumanoidStateType.Landed then
+            humanoid.Jump = true  -- Allow jumping again when landed
+        end
+    end)
+end
+
+-- Listen for the player's character being added
+game.Players.LocalPlayer.CharacterAdded:Connect(onCharacterAdded)
 
