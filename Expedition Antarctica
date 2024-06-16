@@ -165,6 +165,7 @@ local Button = TabPlayer:CreateButton({
         enableGodMode()
     end,
 })
+-- Assuming TabPlayer is a function that creates UI elements and returns the toggle object
 local Toggle = TabPlayer:CreateToggle({
     Name = "INFINITE JUMP",
     CurrentValue = false,
@@ -174,21 +175,32 @@ local Toggle = TabPlayer:CreateToggle({
         local character = player.Character or player.CharacterAdded:Wait()
         local humanoid = character:WaitForChild("Humanoid")
         
-        -- Variable to track the coroutine for monitoring character state
-        local monitorCoroutine
-        
         -- Function to handle normal jump
-        local function handleJump()
-            if humanoid:GetState() == Enum.HumanoidStateType.Jumping or humanoid:GetState() == Enum.HumanoidStateType.Freefall then
-                humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-            end
+        local function handleNormalJump()
+            humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
         end
+        
+        -- Function to handle infinite jump
+        local function handleInfiniteJump()
+            humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+        end
+        
+        -- Variable to track whether infinite jump is enabled
+        local infiniteJumpEnabled = false
         
         -- Listen for the jump input
         local function onInputBegan(input)
             if input.KeyCode == Enum.KeyCode.Space then
                 if not Toggle.CurrentValue then
-                    handleJump()
+                    -- Only allow normal jump if on ground
+                    if humanoid:GetState() == Enum.HumanoidStateType.Seated then
+                        return
+                    elseif humanoid:GetState() == Enum.HumanoidStateType.Jumping or humanoid:GetState() == Enum.HumanoidStateType.Freefall then
+                        handleNormalJump()
+                    end
+                else
+                    -- Allow infinite jump regardless of state
+                    handleInfiniteJump()
                 end
             end
         end
@@ -206,26 +218,9 @@ local Toggle = TabPlayer:CreateToggle({
             end
         end
         
-        -- Stop existing coroutine if it exists
-        if monitorCoroutine then
-            monitorCoroutine:Disconnect()
-            monitorCoroutine = nil
-        end
-        
         -- Start or stop monitoring character state based on toggle value
         if Toggle.CurrentValue then
-            monitorCoroutine = humanoid.StateChanged:Connect(function(_, newState)
-                if newState == Enum.HumanoidStateType.Landed then
-                    humanoid.Jump = true  -- Allow jumping again when landed
-                end
-            end)
             coroutine.wrap(monitorCharacter)()
-        else
-            humanoid.StateChanged:Connect(function(_, newState)
-                if newState == Enum.HumanoidStateType.Landed then
-                    humanoid.Jump = true  -- Allow jumping again when landed
-                end
-            end)
         end
     end,
 })
@@ -234,7 +229,7 @@ local Toggle = TabPlayer:CreateToggle({
 local function onCharacterAdded(character)
     local humanoid = character:WaitForChild("Humanoid")
     
-    -- Reset isJumping when the character lands
+    -- Reset jump state when the character lands
     humanoid.StateChanged:Connect(function(_, newState)
         if newState == Enum.HumanoidStateType.Landed then
             humanoid.Jump = true  -- Allow jumping again when landed
@@ -244,5 +239,3 @@ end
 
 -- Listen for the player's character being added
 game.Players.LocalPlayer.CharacterAdded:Connect(onCharacterAdded)
-
-
