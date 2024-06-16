@@ -165,8 +165,6 @@ local Button = TabPlayer:CreateButton({
         enableGodMode()
     end,
 })
--- Assuming TabPlayer is a function that creates UI elements and returns the toggle object
--- Assuming TabPlayer is a function that creates UI elements and returns the toggle object
 local Toggle = TabPlayer:CreateToggle({
     Name = "INFINITE JUMP",
     CurrentValue = false,
@@ -175,14 +173,17 @@ local Toggle = TabPlayer:CreateToggle({
         local player = game.Players.LocalPlayer
         local character = player.Character or player.CharacterAdded:Wait()
         local humanoid = character:WaitForChild("Humanoid")
-
+        
+        -- Variable to track the coroutine for monitoring character state
+        local monitorCoroutine
+        
         -- Function to handle normal jump
         local function handleJump()
             if humanoid:GetState() == Enum.HumanoidStateType.Jumping or humanoid:GetState() == Enum.HumanoidStateType.Freefall then
                 humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
             end
         end
-
+        
         -- Listen for the jump input
         local function onInputBegan(input)
             if input.KeyCode == Enum.KeyCode.Space then
@@ -191,10 +192,10 @@ local Toggle = TabPlayer:CreateToggle({
                 end
             end
         end
-
+        
         -- Connect input listener
         game:GetService("UserInputService").InputBegan:Connect(onInputBegan)
-
+        
         -- Function to monitor character state
         local function monitorCharacter()
             while humanoid.Parent do
@@ -204,10 +205,27 @@ local Toggle = TabPlayer:CreateToggle({
                 wait()
             end
         end
-
-        -- Start monitoring character state when toggle is enabled
+        
+        -- Stop existing coroutine if it exists
+        if monitorCoroutine then
+            monitorCoroutine:Disconnect()
+            monitorCoroutine = nil
+        end
+        
+        -- Start or stop monitoring character state based on toggle value
         if Toggle.CurrentValue then
+            monitorCoroutine = humanoid.StateChanged:Connect(function(_, newState)
+                if newState == Enum.HumanoidStateType.Landed then
+                    humanoid.Jump = true  -- Allow jumping again when landed
+                end
+            end)
             coroutine.wrap(monitorCharacter)()
+        else
+            humanoid.StateChanged:Connect(function(_, newState)
+                if newState == Enum.HumanoidStateType.Landed then
+                    humanoid.Jump = true  -- Allow jumping again when landed
+                end
+            end)
         end
     end,
 })
@@ -215,7 +233,7 @@ local Toggle = TabPlayer:CreateToggle({
 -- Function to handle player's character added event
 local function onCharacterAdded(character)
     local humanoid = character:WaitForChild("Humanoid")
-
+    
     -- Reset isJumping when the character lands
     humanoid.StateChanged:Connect(function(_, newState)
         if newState == Enum.HumanoidStateType.Landed then
@@ -226,4 +244,5 @@ end
 
 -- Listen for the player's character being added
 game.Players.LocalPlayer.CharacterAdded:Connect(onCharacterAdded)
+
 
