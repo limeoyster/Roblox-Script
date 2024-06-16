@@ -24,208 +24,191 @@ local Window = Rayfield:CreateWindow({
       Key = {"Hello"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
    }
 })
-local Tab = Window:CreateTab("Player", 4483362458) -- Title, Image
+
+-- Create tabs and UI elements
+local Tab = Window:CreateTab("Player", 4483362458)
 local Toggle = Tab:CreateToggle({
    Name = "Anti AFK",
    CurrentValue = false,
-   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Flag = "Toggle1",
    Callback = function(Value)
        local vu = game:GetService("VirtualUser")
-game:GetService("Players").LocalPlayer.Idled:connect(function()
-vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-wait(1)
-vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-end)
-   -- The function that takes place when the toggle is pressed
-   -- The variable (Value) is a boolean on whether the toggle is true or false
+       game:GetService("Players").LocalPlayer.Idled:connect(function()
+           vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+           wait(1)
+           vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+       end)
    end,
 })
+
 local Slider = Tab:CreateSlider({
    Name = "Walk Speed",
    Range = {0, 200},
    Increment = 1,
    Suffix = "Speed",
    CurrentValue = 16,
-   Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Flag = "Slider1",
    Callback = function(s)
        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
-   -- The function that takes place when the slider changes
-   -- The variable (Value) is a number which correlates to the value the slider is currently at
    end,
 })
 
-local Tab = Window:CreateTab("Game", 4483362458) -- Title, Image
+local Tab = Window:CreateTab("Game", 4483362458)
 local Section = Tab:CreateSection("Exchange")
-local Button = Tab:CreateButton({
+local ButtonBitcoin = Tab:CreateButton({
    Name = "Bitcoins",
    Callback = function()
-   -- The function that takes place when the button is pressed
+       -- The function that takes place when the button is pressed
    end,
 })
-local Button = Tab:CreateButton({
+
+local ButtonSolaris = Tab:CreateButton({
    Name = "Solaris",
    Callback = function()
-   -- The function that takes place when the button is pressed
+       -- The function that takes place when the button is pressed
    end,
 })
-local Button = Tab:CreateButton({
+
+local ButtonQuasar = Tab:CreateButton({
    Name = "Quasar",
    Callback = function()
-local args = {
+       local args = {
             [1] = "Qsr"
         }
         game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("ExchangeMoney"):FireServer(unpack(args))
    end,
 })
 
-local Section = Tab:CreateSection("Auto Exchange")
-local Toggle = Tab:CreateToggle({
+local SectionAutoExchange = Tab:CreateSection("Auto Exchange")
+local ToggleBinanceAuto = Tab:CreateToggle({
    Name = "Binance Auto",
    CurrentValue = false,
-   Flag = "Binance1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Flag = "Binance1",
    Callback = function(Value)
-   -- The function that takes place when the toggle is pressed
-   -- The variable (Value) is a boolean on whether the toggle is true or false
+       -- The function that takes place when the toggle is pressed
    end,
 })
-local Toggle = Tab:CreateToggle({
+
+local ToggleSolarisAuto = Tab:CreateToggle({
    Name = "Solaris Auto",
    CurrentValue = false,
-   Flag = "Solaris1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Flag = "Solaris1",
    Callback = function(Value)
-   -- The function that takes place when the toggle is pressed
-   -- The variable (Value) is a boolean on whether the toggle is true or false
+       -- The function that takes place when the toggle is pressed
    end,
 })
 
-local function SendScriptContinuously()
-    while ToggleOn do
-        local args = {
-            [1] = "Qsr"
-        }
-        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("ExchangeMoney"):FireServer(unpack(args))
-        wait(3)  -- Adjust the delay between each script execution as needed
-    end
-end
+local ToggleQuasarAuto = Tab:CreateToggle({
+   Name = "Quasar Auto",
+   CurrentValue = false,
+   Flag = "Quasar1",
+   Callback = function(Auto)
+       ToggleOn = Auto  -- Update the toggle state
 
-Toggle = Tab:CreateToggle({
-    Name = "Quasar Auto",
-    CurrentValue = false,
-    Flag = "Quasar1", -- Unique flag for configuration
-    Callback = function(Auto)
-        ToggleOn = Auto  -- Update the toggle state
-
-        if ToggleOn then
-            -- Start sending the script continuously
-            SendScriptContinuously()
-        end
-    end,
+       if ToggleOn then
+           -- Start sending the script continuously
+           while ToggleOn do
+               local args = {
+                   [1] = "Qsr"
+               }
+               game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("ExchangeMoney"):FireServer(unpack(args))
+               wait(3)  -- Adjust the delay between each script execution as needed
+           end
+       end
+   end,
 })
 
-local Section = Tab:CreateSection("Automation")
-local function SendScriptContinuously1()
-    while ToggleOn do
-        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("ActivateOverclock"):FireServer()
-        wait(15)  -- Adjust the delay between each script execution as needed
-    end
-end
+local SectionAutomation = Tab:CreateSection("Automation")
+local ToggleAutoOverclock = Tab:CreateToggle({
+   Name = "Auto OverClock",
+   CurrentValue = false,
+   Flag = "Clock1",
+   Callback = function(Auto)
+       ToggleOn = Auto  -- Update the toggle state
 
-Toggle = Tab:CreateToggle({
-    Name = "Auto OverClock",
-    CurrentValue = false,
-    Flag = "Clock1", -- Unique flag for configuration
-    Callback = function(Auto)
-        ToggleOn = Auto  -- Update the toggle state
-
-        if ToggleOn then
-            -- Start sending the script continuously
-            SendScriptContinuously1()
-        end
-    end,
+       if ToggleOn then
+           -- Start sending the script continuously
+           while ToggleOn do
+               game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("ActivateOverclock"):FireServer()
+               wait(15)  -- Adjust the delay between each script execution as needed
+           end
+       end
+   end,
 })
 
-local function SendScriptContinuously2()
-    while ToggleOn do
-        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("ClaimFreeBoostStar"):FireServer()
-        wait(10)  -- Adjust the delay between each script execution as needed
-    end
-end
+local ToggleAutoClaimBoostStar = Tab:CreateToggle({
+   Name = "Auto Claim Boost Star",
+   CurrentValue = false,
+   Flag = "Star1",
+   Callback = function(Auto)
+       ToggleOn = Auto  -- Update the toggle state
 
-Toggle = Tab:CreateToggle({
-    Name = "Auto Claim Boost Star",
-    CurrentValue = false,
-    Flag = "Star1", -- Unique flag for configuration
-    Callback = function(Auto)
-        ToggleOn = Auto  -- Update the toggle state
-
-        if ToggleOn then
-            -- Start sending the script continuously
-            SendScriptContinuously2()
-        end
-    end,
+       if ToggleOn then
+           -- Start sending the script continuously
+           while ToggleOn do
+               game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("ClaimFreeBoostStar"):FireServer()
+               wait(10)  -- Adjust the delay between each script execution as needed
+           end
+       end
+   end,
 })
 
-local function SendScriptContinuously3()
-    while ToggleOn do
-        local args = {
-    [1] = 4
-}
+local ToggleAutoAlgorithms = Tab:CreateToggle({
+   Name = "Auto algorithms (test)",
+   CurrentValue = false,
+   Flag = "algo1",
+   Callback = function(Auto)
+       ToggleOn = Auto  -- Update the toggle state
 
-game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("AlgoChang"):FireServer(unpack(args))
-
-        wait(3)  -- Adjust the delay between each script execution as needed
-    end
-end
-
-Toggle = Tab:CreateToggle({
-    Name = "Auto algorithms (test)",
-    CurrentValue = false,
-    Flag = "algo1", -- Unique flag for configuration
-    Callback = function(Auto)
-        ToggleOn = Auto  -- Update the toggle state
-
-        if ToggleOn then
-            -- Start sending the script continuously
-            SendScriptContinuously3()
-        end
-    end,
+       if ToggleOn then
+           -- Start sending the script continuously
+           while ToggleOn do
+               local args = {
+                   [1] = 4
+               }
+               game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("AlgoChang"):FireServer(unpack(args))
+               wait(3)  -- Adjust the delay between each script execution as needed
+           end
+       end
+   end,
 })
-local Tab = Window:CreateTab("Build", 4483362458) -- Title, Image
-local Button = Tab:CreateButton({
-   Name = "Quasar",
+
+local TabBuild = Window:CreateTab("Build", 4483362458)
+local ButtonPlaceShelves = TabBuild:CreateButton({
+   Name = "Place Server Shelves",
    Callback = function()
--- Define the base arguments for placing the "Server Shelf"
-local baseArgs = {
-    [1] = "Server Shelf",
-    [3] = 90 -- Rotation angle (degrees)
-}
+       -- Define the base arguments for placing the "Server Shelf"
+       local baseArgs = {
+           [1] = "Server Shelf",
+           [3] = 90 -- Rotation angle (degrees)
+       }
 
--- Define the corners of the square
-local corner1 = Vector3.new(139, 0, 31)
-local corner2 = Vector3.new(75, 0, -37)
+       -- Define the corners of the square
+       local corner1 = Vector3.new(139, 0, 31)
+       local corner2 = Vector3.new(75, 0, -37)
 
--- Determine the boundaries of the square
-local minX = math.min(corner1.X, corner2.X)
-local maxX = math.max(corner1.X, corner2.X)
-local minZ = math.min(corner1.Z, corner2.Z)
-local maxZ = math.max(corner1.Z, corner2.Z)
+       -- Determine the boundaries of the square
+       local minX = math.min(corner1.X, corner2.X)
+       local maxX = math.max(corner1.X, corner2.X)
+       local minZ = math.min(corner1.Z, corner2.Z)
+       local maxZ = math.max(corner1.Z, corner2.Z)
 
--- Define the size of the "Server Shelf"
-local shelfSize = Vector3.new(8, 0, 4)
+       -- Define the size of the "Server Shelf"
+       local shelfSize = Vector3.new(8, 0, 4)
 
--- Iterate through each position inside the square
-for x = minX, maxX, shelfSize.X do
-    for z = minZ, maxZ, shelfSize.Z do
-        local currentPosition = Vector3.new(x, 0, z)
-        
-        -- Update the position in baseArgs
-        baseArgs[2] = currentPosition
-        
-        -- Fire the server event to place the "Server Shelf" at the current position
-        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Place"):FireServer(unpack(baseArgs))
-        
-        wait(0.3)  -- Adjust delay between each placement as needed
-    end
-end
-
-
+       -- Iterate through each position inside the square
+       for x = minX, maxX, shelfSize.X do
+           for z = minZ, maxZ, shelfSize.Z do
+               local currentPosition = Vector3.new(x, 0, z)
+               
+               -- Update the position in baseArgs
+               baseArgs[2] = currentPosition
+               
+               -- Fire the server event to place the "Server Shelf" at the current position
+               game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Place"):FireServer(unpack(baseArgs))
+               
+               wait(0.3)  -- Adjust delay between each placement as needed
+           end
+       end
+   end,
+})
